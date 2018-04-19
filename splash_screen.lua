@@ -23,11 +23,11 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local puppy
+local logo
 local scrollXSpeed = 8
 local scrollYSpeed = -3
-local jungleSounds = audio.loadSound("Sounds/animals144.mp3")
-local jungleSoundsChannel
+local FAZGamesRecording = audio.loadSound("Sounds/animals144.mp3")
+local FAZGamesRecordingSoundsChannel
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -35,12 +35,16 @@ local jungleSoundsChannel
 
 local rotationSpeed = 3
 
--- The function that moves the puppy across the screen
-local function movePuppy()
-    puppy.x = puppy.x + scrollXSpeed
-    puppy.y = puppy.y + scrollYSpeed
-    puppy.rotation = puppy.rotation + rotationSpeed
+-- The function that makes the logo fade in
+local function moveLogo()
+    logo.alpha = logo.alpha + 0.00001
 end
+
+-- the function that makes drips fall from the logo
+
+
+
+
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
