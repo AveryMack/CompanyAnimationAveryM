@@ -24,32 +24,22 @@ local scene = composer.newScene( sceneName )
  
 -- The local variables for this scene
 local logo
-local scrollXSpeed = 8
-local scrollYSpeed = -3
-local FAZGamesRecording = audio.loadSound("Sounds/animals144.mp3")
+local FAZGamesRecording = audio.loadSound("Sounds/Whoosh-boomEdited.mp3")
 local FAZGamesRecordingSoundsChannel
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
-local rotationSpeed = 3
-
 -- The function that makes the logo fade in
+
 local function moveLogo()
-    logo.alpha = logo.alpha + 0.00001
+    logo.alpha = logo.alpha + 0.01
 end
 
--- the function that makes drips fall from the logo
 
+-- the function that makes the logo twinkle fall from the logo
 
-
-
-
--- The function that will go to the main menu 
-local function gotoMainMenu()
-    composer.gotoScene( "main_menu" )
-end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -65,14 +55,15 @@ function scene:create( event )
     display.setDefault("background", 0, 0, 0)
 
     -- Insert the puppy image
-    puppy = display.newImageRect("Images/puppy.png", 200, 200)
+    logo = display.newImageRect("Images/CompanyLogoAvery.png", 300, 300)
 
     -- set the initial x and y position of the puppy
-    puppy.x = 100
-    puppy.y = display.contentHeight/2
+    logo.x = 500
+    logo.y = display.contentHeight/2
+    logo.alpha = 0
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( puppy )
+    sceneGroup:insert( logo )
 
 end -- function scene:create( event )
 
@@ -97,10 +88,10 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        jungleSoundsChannel = audio.play(jungleSounds )
+        FAZGamesRecordingSoundsChannel = audio.play(FAZGamesRecording)
 
         -- Call the movepuppy function as soon as we enter the frame.
-        Runtime:addEventListener("enterFrame", movePuppy)
+        Runtime:addEventListener("enterFrame", moveLogo)
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
@@ -131,7 +122,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         
         -- stop the jungle sounds channel for this screen
-        audio.stop(jungleSoundsChannel)
+        audio.stop(FAZGamesRecordingSoundsChannel)
     end
 
 end --function scene:hide( event )
