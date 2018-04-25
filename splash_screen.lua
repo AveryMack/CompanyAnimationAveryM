@@ -37,6 +37,10 @@ local function moveLogo()
     logo.alpha = logo.alpha + 0.01
 end
 
+local function moveTwinkle1()
+    twinkle1.alpha = twinkle1.alpha + 0.01
+end
+
 
 -- the function that makes the logo twinkle fall from the logo
 
@@ -64,6 +68,17 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( logo )
+    
+    -- Insert the twinkle 1 image
+    twinkle1 = display.newImageRect("Images/twinkle.png", 300, 300)
+
+    -- set the initial x and y position of the twinkle 1 
+    twinkle1.x = 500
+    twinkle1.y = display.contentHeight/2
+    twinkle1.alpha = 0
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( twinkle1 )
 
 end -- function scene:create( event )
 
