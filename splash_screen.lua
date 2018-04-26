@@ -9,7 +9,6 @@
 
 -- Use Composer Library
 local composer = require( "composer" )
-
 -- Name the Scene
 sceneName = "splash_screen"
 
@@ -24,26 +23,28 @@ local scene = composer.newScene( sceneName )
  
 -- The local variables for this scene
 local logo
-local FAZGamesRecording = audio.loadSound("Sounds/Whoosh-boomEdited.mp3")
-local FAZGamesRecordingSoundsChannel
+local scrollSpeed = 3
+local jungleSounds = audio.loadSound("Sounds/animals144.mp3")
+local jungleSoundsChannel
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
 
--- The function that makes the logo fade in
-
+-- The function that moves the puppy across the screen
 local function moveLogo()
+    logo.x = logo.x + scrollSpeed
     logo.alpha = logo.alpha + 0.01
 end
 
-local function moveTwinkle1()
-    twinkle1.alpha = twinkle1.alpha + 0.01
-end
-
-
--- the function that makes the logo twinkle fall from the logo
-
+local function fadeOutLogo()
+    if (logo.x == display.contentWidth/2) then
+        logo.alpha = 1
+        logo.alpha = logo.alpha - 0.1
+    else 
+        moveLogo()
+    end 
+end 
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -59,26 +60,17 @@ function scene:create( event )
     display.setDefault("background", 0, 0, 0)
 
     -- Insert the puppy image
-    logo = display.newImageRect("Images/CompanyLogoAvery.png", 300, 300)
-
-    -- set the initial x and y position of the puppy
-    logo.x = 500
-    logo.y = display.contentHeight/2
+    logo = display.newImageRect("Images/CompanyLogoAvery.png", 200, 200)
+   
+    -- make the image trnaspearent 
     logo.alpha = 0
+    
+    -- set the initial x and y position of the puppy
+    logo.x = 100
+    logo.y = display.contentHeight/2
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( logo )
-    
-    -- Insert the twinkle 1 image
-    twinkle1 = display.newImageRect("Images/twinkle.png", 300, 300)
-
-    -- set the initial x and y position of the twinkle 1 
-    twinkle1.x = 500
-    twinkle1.y = display.contentHeight/2
-    twinkle1.alpha = 0
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( twinkle1 )
 
 end -- function scene:create( event )
 
@@ -103,13 +95,11 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        FAZGamesRecordingSoundsChannel = audio.play(FAZGamesRecording)
+        jungleSoundsChannel = audio.play(jungleSounds )
 
         -- Call the movepuppy function as soon as we enter the frame.
         Runtime:addEventListener("enterFrame", moveLogo)
-
-        -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3000, gotoMainMenu)          
+       
         
     end
 
@@ -137,7 +127,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         
         -- stop the jungle sounds channel for this screen
-        audio.stop(FAZGamesRecordingSoundsChannel)
+        audio.stop(jungleSoundsChannel)
     end
 
 end --function scene:hide( event )
